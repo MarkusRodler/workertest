@@ -2,12 +2,17 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
+    <LangVersion>10.0</LangVersion>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <PackageId>workertest</PackageId>
+    <PackageDescription>This package is for demonstrating purposes</PackageDescription>
+    <RepositoryUrl>https://github.com/MarkusRodler/workertest</RepositoryUrl>
+    <IsTrimmable>true</IsTrimmable>
   </PropertyGroup>
 
   <ItemGroup>
-        <FrameworkReference Include="Microsoft.AspNetCore.App" />
-
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
+
 </Project>

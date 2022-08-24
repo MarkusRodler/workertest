@@ -5,7 +5,7 @@ on:
     branches: [master]
 
 jobs:
-  lint:
+  demo:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,6 +16,27 @@ jobs:
         uses: actions/setup-dotnet@v2.1.0
         with:
           dotnet-version: "6.0.x"
+          source-url: https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json
+        env:
+          NUGET_AUTH_TOKEN: ${{ github.token }}
+
+      - name: Build with dotnet
+        run: dotnet build worker/workertest.csproj --configuration Release
 
       - name: Lint dotnet
-        run: dotnet tool restore && dotnet format --verify-no-changes --verbosity diagnostic
+        run: dotnet format worker/workertest.csproj --verify-no-changes --verbosity diagnostic
+
+      - name: Pack
+        run: |
+          REPOSITORYURL=${{ github.server_url }}/${{ github.repository }}
+          echo REPOSITORYURL=$REPOSITORYURL
+          dotnet pack worker/workertest.csproj --configuration Release -p:PackageVersion=1.0.0 -p:RepositoryUrl=$REPOSITORYURL
+
+      - name: Publish
+        run: dotnet nuget push "worker/bin/Release/*.nupkg" --api-key ${{ github.token }}
+
+      - name: Build console with dotnet
+        run: dotnet build console/consoletest.csproj --configuration Release
+
+      - name: Lint console
+        run: dotnet format console/consoletest.csproj --verify-no-changes --verbosity diagnostic
