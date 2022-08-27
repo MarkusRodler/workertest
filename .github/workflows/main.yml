@@ -38,5 +38,8 @@ jobs:
       - name: Build console with dotnet
         run: dotnet build console/consoletest.csproj --configuration Release
 
-      - name: Lint console
+      - name: Lint console with old dotnet-format
+        run: dotnet tool restore && dotnet-format console/consoletest.csproj --check --verbosity diagnostic
+
+      - name: Lint console with new dotnet format
         run: dotnet format console/consoletest.csproj --verify-no-changes --verbosity diagnostic
