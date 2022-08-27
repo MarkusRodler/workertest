@@ -30,7 +30,7 @@ jobs:
         run: |
           REPOSITORYURL=${{ github.server_url }}/${{ github.repository }}
           echo REPOSITORYURL=$REPOSITORYURL
-          dotnet pack worker/workertest.csproj --configuration Release -p:PackageVersion=1.0.1 -p:RepositoryUrl=$REPOSITORYURL
+          dotnet pack worker/workertest.csproj --configuration Release -p:PackageVersion=1.0.2 -p:RepositoryUrl=$REPOSITORYURL
 
       - name: Publish
         run: dotnet nuget push "worker/bin/Release/*.nupkg" --api-key ${{ github.token }}
